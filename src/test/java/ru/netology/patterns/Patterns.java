@@ -11,8 +11,8 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
-    public class Patterns {
-        private String serviceUrl = "http://localhost:9999";
+public class Patterns {
+        private String serviceUrl = "http://localhost:9999/";
         private String cityInputCss = "[data-test-id='city'] input.input__control";
         private String nameInputCss = "[data-test-id='name'] input.input__control";
         private String dateInputCss = "[data-test-id='date'] input.input__control";
@@ -23,18 +23,26 @@ import static com.codeborne.selenide.Selenide.*;
         private String calendarClickCss = ".icon_name_calendar";
         private String calendarLayoutCss = ".calendar__layout";
         private String calendarDayCss = ".calendar__day";
+        private DataGenerator.User user;
+        private DataGenerator.User user1;
+
+        @BeforeEach
+        void setUp() {
+
+            user = DataGenerator.getUserInfo();
+            user1 = DataGenerator.getUserInfo();
+        }
 
         @Test
         @DisplayName("Все поля заполнены верно, первая заявка")
         void shouldTestPositive() {
-            User u = DataGenerator.UserInfo();
 
             open(serviceUrl);
-            $(cityInputCss).setValue(DataGenerator.city());
+            $(cityInputCss).setValue(DataGenerator.getCity());
             $(dateInputCss).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
             $(dateInputCss).setValue(DataGenerator.getNextDate("3", "dd.MM.yyyy"));
-            $(nameInputCss).setValue(u.getFullName());
-            $(phoneInputCss).setValue(u.getPhone());
+            $(nameInputCss).setValue(user.getFullName());
+            $(phoneInputCss).setValue(user.getPhone());
             $(checkBoxCss).click();
             $$(submitButtonTag).find(Condition.exactText("Запланировать")).click();
             $(withText("Успешно")).waitUntil(visible, 5000);
@@ -43,14 +51,13 @@ import static com.codeborne.selenide.Selenide.*;
         @Test
         @DisplayName("Все поля заполнены верно, успешное перепланирование даты")
         void shouldTestPositiveReplanning() {
-            User u = DataGenerator.UserInfo();
 
             open(serviceUrl);
-            $(cityInputCss).setValue(DataGenerator.city());
+            $(cityInputCss).setValue(DataGenerator.getCity());
             $(dateInputCss).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
             $(dateInputCss).setValue(DataGenerator.getNextDate("3", "dd.MM.yyyy"));
-            $(nameInputCss).setValue(u.getFullName());
-            $(phoneInputCss).setValue(u.getPhone());
+            $(nameInputCss).setValue(user.getFullName());
+            $(phoneInputCss).setValue(user.getPhone());
             $(checkBoxCss).click();
             $$(submitButtonTag).find(Condition.exactText("Запланировать")).click();
             $(successNotificationCss).waitUntil(visible, 5000);
@@ -67,19 +74,17 @@ import static com.codeborne.selenide.Selenide.*;
         @Test
         @DisplayName("Все поля заполнены верно, имя новое, телефон тот же, не предлагает перепланировать ")
         void shouldTestPositiveNoReplanning() {
-            User u = DataGenerator.UserInfo();
-            User u1 = DataGenerator.UserInfo();
 
             open(serviceUrl);
-            $(cityInputCss).setValue(DataGenerator.city());
+            $(cityInputCss).setValue(DataGenerator.getCity());
             $(dateInputCss).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
             $(dateInputCss).setValue(DataGenerator.getNextDate("3", "dd.MM.yyyy"));
-            $(nameInputCss).setValue(u.getFullName());
-            $(phoneInputCss).setValue(u.getPhone());
+            $(nameInputCss).setValue(user.getFullName());
+            $(phoneInputCss).setValue(user.getPhone());
             $(checkBoxCss).click();
             $$(submitButtonTag).find(Condition.exactText("Запланировать")).click();
             $(successNotificationCss).waitUntil(visible, 5000);
-            $(nameInputCss).setValue(u1.getFullName());
+            $(nameInputCss).setValue(user1.getFullName());
             $(calendarClickCss).click();
             $(calendarLayoutCss).waitUntil(visible, 5000);
             $(dateInputCss).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);

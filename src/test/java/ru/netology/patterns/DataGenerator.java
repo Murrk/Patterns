@@ -1,13 +1,25 @@
 package ru.netology.patterns;
 
 import com.github.javafaker.Faker;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-    public class DataGenerator{
+
+public class DataGenerator{
         private DataGenerator(){}
 
-    public static User UserInfo(){
+    @Value
+    @Data
+    @RequiredArgsConstructor
+    public static class User {
+            private final String fullName;
+            private final String phone;
+        }
+
+    public static User getUserInfo(){
          Faker faker = new Faker(new Locale("RU"));
          return new User(
          faker.name().fullName(),
@@ -23,7 +35,7 @@ import java.util.*;
         return dateOfMeeting;
     }
 
-    public static String city() {
+    public static String getCity() {
         List<String> cities = new ArrayList<>();
         cities.add("Великий Новгород");
         cities.add("Горно-Алтайск");
@@ -37,7 +49,7 @@ import java.util.*;
         cities.add("Южно-Сахалинск");
 
         Random random = new Random();
-        int i = random.nextInt(10);
+        int i = random.nextInt(cities.size());
         return cities.get(i);
     }
 }
