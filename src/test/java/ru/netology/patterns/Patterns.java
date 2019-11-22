@@ -2,16 +2,22 @@ package ru.netology.patterns;
 
 import com.codeborne.selenide.Condition;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
+
+
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Patterns {
+        private static final Logger LOGGER = LogManager.getLogger(Patterns.class);
         private String serviceUrl = "http://localhost:9999/";
         private String cityInputCss = "[data-test-id='city'] input.input__control";
         private String nameInputCss = "[data-test-id='name'] input.input__control";
@@ -25,6 +31,15 @@ public class Patterns {
         private String calendarDayCss = ".calendar__day";
         private DataGenerator.User user;
         private DataGenerator.User user1;
+
+        @BeforeAll
+        static void setUpAll(){
+            SelenideLogger.addListener("allure", new AllureSelenide());
+        }
+        @AfterAll
+        static void tearDownAll(){
+            SelenideLogger.removeListener("allure");
+        }
 
         @BeforeEach
         void setUp() {
