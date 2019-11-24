@@ -1,5 +1,4 @@
 # Patterns [![Build status](https://ci.appveyor.com/api/projects/status/kf5odib1imdpe744?svg=true)](https://ci.appveyor.com/project/Murrk/patterns)
-# ArtemCI [![Build status](https://ci.appveyor.com/api/projects/status/yddnip65d60hjpbx?svg=true)](https://ci.appveyor.com/project/ArRomanov/patterns)
 
 ## Домашнее задание к занятию «2.3. Patterns» + «4.1. Репортинг»
 
