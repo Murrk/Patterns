@@ -5,19 +5,15 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
-
-
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Patterns {
-        private static final Logger LOGGER = LogManager.getLogger(Patterns.class);
+
         private String serviceUrl = "http://localhost:9999/";
         private String cityInputCss = "[data-test-id='city'] input.input__control";
         private String nameInputCss = "[data-test-id='name'] input.input__control";
@@ -29,6 +25,7 @@ public class Patterns {
         private String calendarClickCss = ".icon_name_calendar";
         private String calendarLayoutCss = ".calendar__layout";
         private String calendarDayCss = ".calendar__day";
+        private String nextMonthCalendarDayCss = ".calendar__arrow_direction_right";
         private DataGenerator.User user;
         private DataGenerator.User user1;
 
@@ -79,6 +76,8 @@ public class Patterns {
             $(calendarClickCss).click();
             $(calendarLayoutCss).waitUntil(visible, 5000);
             $(dateInputCss).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
+            $$(calendarDayCss).find(exactText(DataGenerator.getNextDate("7","d"))).waitUntil(visible, 5000).click();
+            $(nextMonthCalendarDayCss).click();
             $$(calendarDayCss).find(exactText(DataGenerator.getNextDate("7","d"))).click();
             $$(submitButtonTag).find(Condition.exactText("Запланировать")).click();
             $(withText("Необходимо подтверждение")).waitUntil(visible, 5000);
