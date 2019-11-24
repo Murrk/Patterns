@@ -1,6 +1,6 @@
 # Patterns [![Build status](https://ci.appveyor.com/api/projects/status/kf5odib1imdpe744?svg=true)](https://ci.appveyor.com/project/Murrk/patterns)
 
-## Домашнее задание к занятию «2.3. Patterns»
+## Домашнее задание к занятию «2.3. Patterns» + «4.1. Репортинг»
 
 ### Инструкция по запуску
 
