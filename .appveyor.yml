@@ -3,6 +3,7 @@ image: Ubuntu1804  # образ для сборки
 branches:
   only:
     - master  # ветка git
+    - fix_ci  # ветка git
 
 build: off  # будем использовать свой скрипт сборки
 
